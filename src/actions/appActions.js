@@ -2,11 +2,11 @@ import alt from '../alt';
 
 
 class appActions {
-    constructor() {
-        this.generateActions(
-            'add'
-        )
-    }
+	constructor() {
+		this.generateActions(
+			'stream'
+		)
+	}
 }
 
 export

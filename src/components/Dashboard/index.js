@@ -1,16 +1,16 @@
 import React from 'react'
+import _ from 'lodash'
 import {
 	PropTypes
 }
-from 'react-router';
-
-
+from 'react-router'
 import {
 	RaisedButton, Paper, IconButton, Dialog, TextField
 }
 from 'material-ui'
 
 
+import AppActions from '../../actions/appActions'
 import torrentEngine from '../../utils/torrent'
 
 
@@ -25,7 +25,6 @@ export default class Dashboard extends React.Component {
 	};
 
 	addTorrent() {
-		console.log(this.context)
 		const torrent = this.refs['torrent-text'].getValue()
 
 		if (!torrent || !torrent.length > 0) return
@@ -42,17 +41,21 @@ export default class Dashboard extends React.Component {
 
 	}
 
-
-	streamTorrent(torrent = false) {
+	streamTorrent = (torrent = false) => {
 		if (!torrent) return console.error('No torrent defined something has gone horribly wrong!')
 
 		console.log(torrent)
 		torrentEngine.init(torrent)
 			.then(torrent => {
-				console.log(torrent)
+				_.defer(() => {
+					const streamUrl = `http://127.0.0.1${torrent['stream-port']}`
 
+					AppActions.stream(streamUrl)
+					_.defer(() => this.context.history.replace('/player'))
+
+				})
 			})
-	}
+	};
 
 	render() {
 		return (
