@@ -60,11 +60,14 @@ default class extends React.Component {
                 preserveDrawingBuffer: true
             })
             this.props.emitter.emit('wcjsLoaded', wcjsInstance);
-
-
         }
+
+        this.props.emitter.on('error', err => console.error(err))
+
         console.log(wcjsInstance, this.props.url)
+
         wcjsInstance.play(this.props.url)
+
     }
 
     render() {
