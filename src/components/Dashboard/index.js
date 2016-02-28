@@ -7,7 +7,10 @@ from 'material-ui'
 
 import {dialog} from 'remote'
 
+import Dropzone from 'react-dropzone'
+
 import torrentEngine from '../../utils/torrent'
+
 
 class If extends React.Component {
     render() {
@@ -44,6 +47,19 @@ export default class Dashboard extends React.Component {
         this.props.setUrl(url)
     };
 
+
+    onDrop = files => {
+
+    	if(!files || files.length === 0 || !files[0] || !files[0].type.includes('video/')) return
+
+    	this.props.setUrl(`file:///${files[0].path}`)
+
+
+
+    };
+
+
+
     streamTorrent = (torrent = false) => {
         if (!torrent) return console.error('No torrent defined something has gone horribly wrong!')
 
@@ -70,10 +86,11 @@ export default class Dashboard extends React.Component {
 
 
         return (
-            <div className="wrapper">
+            <Dropzone onDrop={this.onDrop} multiple={false} disableClick={true} className="wrapper">
                <center>
                     <div ref="dropper">
                         <div>
+
   
                             <span className="fl_sl">select an option from below</span>
                             <br/>
@@ -92,7 +109,6 @@ export default class Dashboard extends React.Component {
                                 			extensions: ["mkv", "avi", "mp4", "mpg", "mpeg", "webm", "flv", "ogg", "ogv", "mov", "wmv", "3gp", "3g2"]
                                 			}]	
                                 	}, filename => {
-                                		console.log(filename)
                                 		this.props.setUrl(`file:///${filename}`)
                                		})
                                 }label="Add Video" />
@@ -137,7 +153,7 @@ export default class Dashboard extends React.Component {
                         </div>
                     </div>
                </center>
-            </div>
+            </Dropzone>
         )
     }
 }
