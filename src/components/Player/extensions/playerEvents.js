@@ -43,7 +43,9 @@ class PlayerEvents extends EventEmitter {
             this._wcjs.onSeekableChanged = Seekable => this.emit('seekable', Seekable)
 
             this._wcjs.onFrameRendered = (width, height) => {
-                console.log(width, height)
+            	const win = remote.getCurrentWindow()
+                win.setSize(width, height+30)
+                win.center()
             }
 
             
@@ -70,8 +72,11 @@ class PlayerEvents extends EventEmitter {
             this._wcjs.stop()
             const events = ['opening', 'position', 'time', 'volume', 'buffering', 'length', 'seekable', 'playing', 'togglePause', 'ended', 'changed', 'mouseMove', 'closed']
             events.forEach(event => this.removeAllListeners(event))
+            const win = remote.getCurrentWindow()
+            win.setKiosk(false)
+            win.setSize(575, 350)
+            win.center()
             this.emit('closed')
-            remote.getCurrentWindow().setKiosk(false)
         });
 
 
