@@ -88,6 +88,11 @@ export default class PlayerEvents extends EventEmitter {
                     console.log(socket)
                     let authed = false
 
+
+
+                    socket.on('playing', status => this.emit('togglePause'))
+
+
                     this.on('auth', pin => authed = (this.PIN === pin))
                     this.on('position', position => socket.emit('position', position))
                     this.on('time', time => socket.emit('time', time))
@@ -100,12 +105,8 @@ export default class PlayerEvents extends EventEmitter {
                     })
                 })
 
-                this.ioServer.listen(port)
-
+                this.ioServer.listen(1337)
                 this.emit('qrCode', <ReactQR text={JSON.stringify({pin: this.PIN,ip,port})} />)
             })
     }
 }
-
-
-PlayerEvents;
