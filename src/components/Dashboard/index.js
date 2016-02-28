@@ -5,9 +5,9 @@ import {
 }
 from 'material-ui'
 
+import {dialog} from 'remote'
+
 import torrentEngine from '../../utils/torrent'
-
-
 
 class If extends React.Component {
     render() {
@@ -40,6 +40,7 @@ export default class Dashboard extends React.Component {
             loadingModal: false,
             urlAddOpen: false
         })
+    	console.log(url)
         this.props.setUrl(url)
     };
 
@@ -82,7 +83,20 @@ export default class Dashboard extends React.Component {
                                                     <br/>
                             <div className="mainButHold">
                                 <RaisedButton style={{float: 'left', width: '130px'}} onClick={() => this.setState({torrentAddOpen: true})} label="Add Torrent" />
-                                <RaisedButton style={{width: '130px'}} onClick={this.addFile} label="Add Video" />
+                                <RaisedButton style={{width: '130px'}} onClick={() =>
+                                	dialog.showOpenDialog({
+                                		title: 'Select a Video',
+                                		properties: ['openFile', 'createDirectory'],
+                                		filters: [{
+                                			name: 'Videos',
+                                			extensions: ["mkv", "avi", "mp4", "mpg", "mpeg", "webm", "flv", "ogg", "ogv", "mov", "wmv", "3gp", "3g2"]
+                                			}]	
+                                	}, filename => {
+                                		console.log(filename)
+                                		this.props.setUrl(`file:///${filename}`)
+                               		})
+                                }label="Add Video" />
+
                                 <RaisedButton style={{float: 'right', width: '130px'}} onClick={() => this.setState({urlAddOpen: true})} label="Use a URL" />
                             </div>
 
