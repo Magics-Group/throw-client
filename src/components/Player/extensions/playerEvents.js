@@ -13,8 +13,8 @@ import {
     remote
 }
 from 'electron'
-import reactQR from 'react-qr'
 import React from 'react'
+import ReactQR from 'react-qr'
 import socketIO from 'socket.io'
 import getPort from 'get-port'
 
@@ -27,7 +27,7 @@ const getInternalIP = () => {
 }
 
 
-class PlayerEvents extends EventEmitter {
+export default class PlayerEvents extends EventEmitter {
     constructor() {
         super()
 
@@ -42,8 +42,8 @@ class PlayerEvents extends EventEmitter {
             this._wcjs.onSeekableChanged = Seekable => this.emit('seekable', Seekable)
 
             this._wcjs.onFrameRendered = (width, height) => {
-            	const win = remote.getCurrentWindow()
-                win.setSize(width, height+30)
+                const win = remote.getCurrentWindow()
+                win.setSize(width, height + 30)
                 win.center()
             }
 
@@ -65,17 +65,17 @@ class PlayerEvents extends EventEmitter {
         this.on('volumeChange', volume => {
             this._wcjs.volume = volume
             this.emit('volume', volume)
-        });
+        })
         this.on('close', () => {
             this._wcjs.stop()
-            const events = ['opening', 'position', 'time', 'volume', 'buffering', 'length', 'seekable', 'playing', 'togglePause', 'ended', 'changed', 'mouseMove', 'closed']
+            const events = ['opening', 'position', 'qrCode', 'time', 'volume', 'buffering', 'length', 'seekable', 'playing', 'togglePause', 'ended', 'changed', 'mouseMove', 'closed']
             events.forEach(event => this.removeAllListeners(event))
             const win = remote.getCurrentWindow()
             win.setKiosk(false)
             win.setSize(575, 350)
             win.center()
             this.emit('closed')
-        });
+        })
 
 
         this.PIN = Math.floor(Math.random() * 5) + 1
@@ -83,6 +83,7 @@ class PlayerEvents extends EventEmitter {
         Promise.all([getInternalIP(), getPort()])
             .spread((ip, port) => {
                 this.ioServer = socketIO()
+
                 this.ioServer.on('connection', socket => {
                     console.log(socket)
                     let authed = false
@@ -90,28 +91,21 @@ class PlayerEvents extends EventEmitter {
                     this.on('auth', pin => authed = (this.PIN === pin))
                     this.on('position', position => socket.emit('position', position))
                     this.on('time', time => socket.emit('time', time))
+                    this.on('length', length => socket.emit('length', length))
                     this.on('playing', playing => socket.emit('playing', playing))
                     this.on('ended', () => socket.emit('ended'))
+                    this.on('closed', () => {
+                        socket.emit('ended')
+                        socket.disconnect()
+                    })
                 })
 
+                this.ioServer.listen(port)
 
-                this.ioServer.listen(1337)
-
-
-                console.log(ip, this.ioServer)
-            });
-
+                this.emit('qrCode', <ReactQR text={JSON.stringify({pin: this.PIN,ip,port})} />)
+            })
     }
+}
 
 
-
-    QRcode() {
-
-        return <reactQR text='1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v'/>
-
-    }
-};
-
-
-export
-default PlayerEvents;
+PlayerEvents;

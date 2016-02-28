@@ -56,7 +56,7 @@ default class Player extends React.Component {
 	render() {
 		return (
 			<div className="wcjs-player">
-                <Header close={this.props.close} uiShown={this.state.uiShown} title={this.props.url} />
+                <Header close={this.props.close} emitter={this.emitter} uiShown={this.state.uiShown} title={this.props.url} />
                 <Render url={this.props.url} emitter={this.emitter} />
                 <Controls emitter={this.emitter} uiShown={this.state.uiShown} wcjs={this.state.wcjs} />
             </div>
