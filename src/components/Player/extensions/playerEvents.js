@@ -6,27 +6,35 @@ import {
     EventEmitter
 }
 from 'events';
+import dns from 'dns'
+import os from 'os'
+import {
+    remote
+}
+from 'electron'
+import reactQR from 'react-qr'
+import React from 'react'
 
 class PlayerEvents extends EventEmitter {
     constructor() {
-        super();
+        super()
 
         this.on('wcjsLoaded', wcjs => {
-            this._wcjs = wcjs;
+            this._wcjs = wcjs
 
-            this._wcjs.onPositionChanged = throttle(pos => this.emit('position', pos), 500);
-            this._wcjs.onOpening = () => this.emit('opening');
-            this._wcjs.onTimeChanged = time => this.emit('time', time);
-            this._wcjs.onBuffering = throttle(buf => this.emit('buffering', buf), 500);
-            this._wcjs.onLengthChanged = length => this.emit('length', length);
-            this._wcjs.onSeekableChanged = Seekable => this.emit('seekable', Seekable);
-            this._wcjs.onPlaying = () => this.emit('playing', true);
-            this._wcjs.onPaused = () => this.emit('playing', false);
-            this._wcjs.onStopped = () => this.emit('playing', false);
-            this._wcjs.onEndReached = () => this.emit('ended');
-            this._wcjs.onEncounteredError = err => this.emit('error', err);
-            this._wcjs.onMediaChanged = () => this.emit('changed');
-        });
+            this._wcjs.onPositionChanged = throttle(pos => this.emit('position', pos), 500)
+            this._wcjs.onOpening = () => this.emit('opening')
+            this._wcjs.onTimeChanged = time => this.emit('time', time)
+            this._wcjs.onBuffering = throttle(buf => this.emit('buffering', buf), 500)
+            this._wcjs.onLengthChanged = length => this.emit('length', length)
+            this._wcjs.onSeekableChanged = Seekable => this.emit('seekable', Seekable)
+            this._wcjs.onPlaying = () => this.emit('playing', true)
+            this._wcjs.onPaused = () => this.emit('playing', false)
+            this._wcjs.onStopped = () => this.emit('playing', false)
+            this._wcjs.onEndReached = () => this.emit('ended')
+            this._wcjs.onEncounteredError = err => this.emit('error', err)
+            this._wcjs.onMediaChanged = () => this.emit('changed')
+        })
 
 
         this.on('togglePause', () => this._wcjs.togglePause())
@@ -40,11 +48,22 @@ class PlayerEvents extends EventEmitter {
         });
         this.on('close', () => {
             this._wcjs.stop()
-            const events = ['opening', 'position', 'time', 'volume', 'buffering', 'length', 'seekable', 'playing', 'togglePause', 'ended', 'changed', 'mouseMove', 'closed'];
-            events.forEach(event => this.removeAllListeners(event));
-            this.emit('closed');
+            const events = ['opening', 'position', 'time', 'volume', 'buffering', 'length', 'seekable', 'playing', 'togglePause', 'ended', 'changed', 'mouseMove', 'closed']
+            events.forEach(event => this.removeAllListeners(event))
+            this.emit('closed')
+            remote.getCurrentWindow().setKiosk(false)
         });
     }
+
+    QRcode() {
+        dns.lookup(os.hostname(), (err, add, fam) => {
+            console.log('addr: ' + add);
+        })
+
+        return <reactQR text='1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v'/>
+
+    }
+
 };
 
 
