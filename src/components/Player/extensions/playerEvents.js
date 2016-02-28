@@ -91,8 +91,6 @@ export default class PlayerEvents extends EventEmitter {
                 this.ioServer.on('connection', socket => {
                     let authed = false
 
-
-
                     socket.on('pin', pin => {
                         authed = parseInt(pin) === parseInt(this.PIN)
                     })
@@ -100,6 +98,7 @@ export default class PlayerEvents extends EventEmitter {
                     socket.on('position', percent => {
                         if (!authed) return
                         const scrobbleTime = this._wcjs.totalTime * percent
+                        console.log(scrobbleTime)
 
                     })
                     socket.on('playing', () => {

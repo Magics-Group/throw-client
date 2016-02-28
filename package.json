@@ -51,7 +51,7 @@
     "grunt-newer": "^1.1.2",
     "grunt-npm-command": "^0.1.0",
     "grunt-sass": "^1.1.0",
-    "grunt-shell": "^1.1.2",
+    "grunt-shell": "^1.2.1",
     "grunt-shell-spawn": "^0.3.10",
     "grunt-vlc-libs": "0.0.1",
     "load-grunt-tasks": "^3.3.0"
