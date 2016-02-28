@@ -9,8 +9,6 @@ import PlayerEvents from './extensions/playerEvents'
 import PlayerStore from './store'
 import PlayerActions from './actions'
 
-const PlayerEmitter = new PlayerEvents()
-
 export
 default class Player extends React.Component {
 
@@ -19,7 +17,7 @@ default class Player extends React.Component {
 		uiShown: true
 	};
 
-	emitter = PlayerEmitter;
+	emitter = new PlayerEvents();
 
 	componentWillMount() {
 		PlayerStore.listen(this._update);
