@@ -75,20 +75,7 @@ module.exports = function(grunt) {
                     src: ['**/*'],
                     dest: 'build/bin/'
                 }]
-            },
-            videoWin: {
-                files: [{
-                    expand: true,
-                    cwd: 'bin/vlc',
-                    src: ['**/*'],
-                    dest: 'dist/' + BASENAME + '-win32-' + arch + '/resources/bin'
-                }, {
-                    expand: true,
-                    cwd: 'bin/wcjs',
-                    src: ['**/*'],
-                    dest: 'dist/' + BASENAME + '-win32-' + arch + '/resources/bin'
-                }]
-            },
+            }
         },
         sass: {
             options: {
@@ -191,7 +178,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ['newer:babel', 'sass', 'newer:copy:build', 'shell:electron', 'watchChokidar']);
 
-    grunt.registerTask('deps', ['vlc_libs', 'wcjs']);
+    grunt.registerTask('deps', ['vlc_libs', 'wcjs', 'newer:copy:videoDev']);
 
     grunt.registerTask('run', ['newer:babel', 'shell:electron', 'watchChokidar']);
 
