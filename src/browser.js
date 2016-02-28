@@ -16,6 +16,7 @@ app.on('ready', () => {
         height: 350,
         'standard-window': true,
         'auto-hide-menu-bar': true,
+         icon: path.join(__dirname, '../images/icon.png'),
         resizable: true,
         title: 'Throw Player',
         center: true,
