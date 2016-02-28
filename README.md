@@ -1,4 +1,21 @@
-# Throw Client
+# Throw Player
+
+### Requirements
+
+ - PC running Windows 7 or above.
+
+### Screenshots
+
+<img src="preview/Dashboard.PNG" alt="Dashboard" width="34%"/>
+<img src="preview/Playing-torrent.PNG" alt="Playing-torrent" width="34%"/>
+<img src="preview/Torrent.PNG" alt="adding torrent" width="30%" height="30%"/>
+
+### Where's the beef!
+
+Pre-built binarys & setup files can be found in the [Releases Tab](https://github.com/luigiplr/netify-jump/releases).
+
+<br>
+
 
 ### Getting Started
 
