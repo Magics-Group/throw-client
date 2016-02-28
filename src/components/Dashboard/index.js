@@ -38,6 +38,9 @@ export default class Dashboard extends React.Component {
     };
 
     render() {
+
+        if (!this.props.open) return null
+
         return (
             <div className="wrapper">
                <center>

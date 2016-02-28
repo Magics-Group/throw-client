@@ -3,6 +3,11 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import Player from './Player'
 import DashBoard from './Dashboard'
 
+class If extends React.Component {
+    render() {
+        return this.props.test ? this.props.children : null
+    }
+}
 
 export default class Framework extends React.Component {
 
@@ -16,10 +21,9 @@ export default class Framework extends React.Component {
     }
 
     setUrl = url => {
-        console.log(url)
         this.setState({
             url,
-            open: true
+            PlayerOpen: true
         })
     }
 
@@ -27,8 +31,10 @@ export default class Framework extends React.Component {
         return (
             <div>
                 <div className="row">
-                    <DashBoard setUrl={this.setUrl} />
-                    <Player open={this.state.PlayerOpen} url={this.state.url} />
+                    <DashBoard open={!this.state.PlayerOpen} setUrl={this.setUrl} />
+                    <If test={this.state.PlayerOpen}>
+                        <Player close={() => this.setState({url: null, PlayerOpen: false})} url={this.state.url} />
+                    </If>
                 </div>
             </div>
         )

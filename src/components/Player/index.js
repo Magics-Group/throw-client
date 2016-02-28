@@ -15,7 +15,6 @@ export
 default class Player extends React.Component {
 
 	state = {
-		url: this.props.url,
 		wcjs: false,
 		uiShown: true
 	};
@@ -27,10 +26,6 @@ default class Player extends React.Component {
 	}
 
 	componentDidMount() {
-		this.emitter.on('wcjsLoaded', wcjs => this.setState({
-			wcjs
-		}));
-
 		document.addEventListener('mousemove', this._onMouseMove);
 		this.hoverTimeout = setTimeout(() => this.setState({
 			uiShown: false
@@ -44,9 +39,8 @@ default class Player extends React.Component {
 		this.hoverTimeout && clearTimeout(this.hoverTimeout);
 	}
 
-	_update = () => {
-		this.setState(PlayerStore.getState());
-	}
+
+	_update = () => this.setState(PlayerStore.getState());
 
 	_onMouseMove = () => {
 		this.hoverTimeout && clearTimeout(this.hoverTimeout);
@@ -62,19 +56,10 @@ default class Player extends React.Component {
 	}
 
 	render() {
-
-
-
-		if (!this.props.open) return null
-
-
-
-		console.log('top level render')
-
 		return (
 			<div className="wcjs-player">
-                <Header uiShown={this.state.uiShown} title={'no'} />
-                <Render emitter={this.emitter} />
+                <Header close={this.props.close} uiShown={this.state.uiShown} title={this.props.url} />
+                <Render url={this.props.url} emitter={this.emitter} />
                 <Controls emitter={this.emitter} uiShown={this.state.uiShown} wcjs={this.state.wcjs} />
             </div>
 		);

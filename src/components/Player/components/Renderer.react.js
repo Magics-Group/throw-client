@@ -46,18 +46,25 @@ default class extends React.Component {
 
     _initWCJS() {
         if (!this.state.wcjs) {
-            this.props.emitter.emit('wcjsLoaded', wcjsRenderer.init(this.refs['wcjs-render'], [
+            var wcjsInstance = wcjsRenderer.init(this.refs['wcjs-render'], [
                 "--no-sub-autodetect-file"
             ], {
                 fallbackRenderer: false,
                 preserveDrawingBuffer: true
-            }, wcjs));
+            }, wcjs);
+            this.props.emitter.emit('wcjsLoaded', wcjsInstance);
         } else {
-            this.props.emitter.emit('wcjsLoaded', wcjsRenderer.reinit(this.refs['wcjs-render'], this.state.wcjs, {
+
+            var wcjsInstance = wcjsRenderer.reinit(this.refs['wcjs-render'], this.state.wcjs, {
                 fallbackRenderer: false,
                 preserveDrawingBuffer: true
-            }));
+            })
+            this.props.emitter.emit('wcjsLoaded', wcjsInstance);
+
+
         }
+        console.log(wcjsInstance, this.props.url)
+        wcjsInstance.play(this.props.url)
     }
 
     render() {

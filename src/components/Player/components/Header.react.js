@@ -24,8 +24,7 @@ class Header extends React.Component {
     }
 
     _handelClose() {
-        PlayerActions.close();
-        this.context.history.replace('/');
+        this.props.close()
     }
 
     render() {
