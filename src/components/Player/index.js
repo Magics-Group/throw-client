@@ -5,16 +5,18 @@ import Controls from './components/Controls.react'
 import Render from './components/Renderer.react'
 
 import PlayerEvents from './extensions/playerEvents'
-
 import PlayerStore from './store'
-import PlayerActions from './actions'
+
+import TraktMatcher from './utils/Trakt'
+
 
 export
 default class Player extends React.Component {
 
 	state = {
 		wcjs: false,
-		uiShown: true
+		uiShown: true,
+		title: this.props.title
 	};
 
 	emitter = new PlayerEvents();
@@ -28,6 +30,9 @@ default class Player extends React.Component {
 		this.hoverTimeout = setTimeout(() => this.setState({
 			uiShown: false
 		}), 3000);
+
+		const TraktSearch = new TraktMatcher(this.props.title)
+
 	}
 
 	componentWillUnmount() {
@@ -56,7 +61,7 @@ default class Player extends React.Component {
 	render() {
 		return (
 			<div className="wcjs-player">
-                <Header close={this.props.close} emitter={this.emitter} uiShown={this.state.uiShown} title={this.props.url} />
+                <Header close={this.props.close} emitter={this.emitter} uiShown={this.state.uiShown} title={this.state.title} />
                 <Render url={this.props.url} emitter={this.emitter} />
                 <Controls emitter={this.emitter} uiShown={this.state.uiShown} wcjs={this.state.wcjs} />
             </div>

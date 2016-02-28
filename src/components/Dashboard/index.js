@@ -4,8 +4,12 @@ import {
     RaisedButton, Paper, IconButton, Dialog, TextField
 }
 from 'material-ui'
-
-import {dialog} from 'remote'
+import urlNode from 'url'
+import path from 'path'
+import {
+    dialog
+}
+from 'remote'
 
 import torrentEngine from '../../utils/torrent'
 
@@ -34,31 +38,37 @@ export default class Dashboard extends React.Component {
 
     streamURL = (url = this.refs['url-text'].getValue()) => {
         if (!url || !url.length > 0) return
-
-
         this.setState({
             loadingModal: false,
             urlAddOpen: false
         })
-    	console.log(url)
+        this.props.openPlayer({
+            title: urlNode.parse(url).pathname,
+            url
+        })
         this.props.setUrl(url)
     };
 
     streamTorrent = (torrent = false) => {
         if (!torrent) return console.error('No torrent defined something has gone horribly wrong!')
-
-        console.log(torrent)
+            
         torrentEngine.init(torrent)
             .then(engine => {
                 this.setState({
                     loadingModal: true
                 })
+
+                console.log(engine)
+
                 engine.on('ready', () => {
                     this.setState({
                         loadingModal: false,
                         torrentAddOpen: false
                     })
-                    this.props.setUrl(`http://localhost:${engine['stream-port']}`)
+                    this.props.openPlayer({
+                        url: `http://127.0.0.1:${engine['stream-port']}`,
+                        title: engine.torrent.name
+                    })
                 })
             })
     };
@@ -92,8 +102,10 @@ export default class Dashboard extends React.Component {
                                 			extensions: ["mkv", "avi", "mp4", "mpg", "mpeg", "webm", "flv", "ogg", "ogv", "mov", "wmv", "3gp", "3g2"]
                                 			}]	
                                 	}, filename => {
-                                		console.log(filename)
-                                		this.props.setUrl(`file:///${filename}`)
+                                        this.props.openPlayer({
+                                            url: `file:///${filename}`,
+                                            title: path.basename(filename)
+                                        })
                                		})
                                 }label="Add Video" />
 

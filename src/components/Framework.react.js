@@ -20,8 +20,9 @@ export default class Framework extends React.Component {
         injectTapEventPlugin()
     }
 
-    setUrl = url => this.setState({
+    openPlayer = ({url, title = ''}) => this.setState({
         url,
+        title,
         PlayerOpen: true
     });
 
@@ -29,9 +30,9 @@ export default class Framework extends React.Component {
         return (
             <div>
                 <div className="row">
-                    <DashBoard open={!this.state.PlayerOpen} setUrl={this.setUrl} />
+                    <DashBoard open={!this.state.PlayerOpen} openPlayer={this.openPlayer} />
                     <If test={this.state.PlayerOpen}>
-                        <Player close={() => this.setState({url: null, PlayerOpen: false})} url={this.state.url} />
+                        <Player close={() => this.setState({url: null, PlayerOpen: false})} url={this.state.url} title={this.state.title} />
                     </If>
                 </div>
             </div>

@@ -53,7 +53,7 @@ export default class Trakt extends EventEmitter {
 
         // format
         formatted.title = formatted.title || title.replace(/\..+$/, ''); // remove extension;
-        formatted.title = $.trim(formatted.title.replace(/[\.]/g, ' '))
+        formatted.title = formatted.title.replace(/[\.]/g, ' ').trim()
             .replace(/^\[.*\]/, '') // starts with brackets
             .replace(/[^\w ]+/g, '') // remove brackets
             .replace(/ +/g, '-') // has multiple spaces

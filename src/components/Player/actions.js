@@ -9,9 +9,7 @@ class PlayerActions {
 
     constructor() {
         this.generateActions(
-            'setFiles',
-            'newWCJS',
-            'close'
+            'newWCJS'
         );
     }
 }
