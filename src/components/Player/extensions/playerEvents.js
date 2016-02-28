@@ -34,6 +34,7 @@ class PlayerEvents extends EventEmitter {
             this.emit('volume', volume)
         });
         this.on('close', () => {
+            this._wcjs.stop()
             const events = ['opening', 'position', 'time', 'volume', 'buffering', 'length', 'seekable', 'playing', 'ended', 'changed', 'mouseMove', 'closed'];
             events.forEach(event => this.removeAllListeners(event));
             this.emit('closed');
