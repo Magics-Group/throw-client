@@ -1,0 +1,19 @@
+# Node
+.DS_Store
+.swp
+npm-debug.log
+
+# Cache
+cache
+
+# Tests
+.test
+
+# IDEs
+.idea
+
+# Custom
+build
+dist
+release
+node_modules
