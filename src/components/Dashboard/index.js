@@ -102,7 +102,7 @@ export default class Dashboard extends React.Component {
                         <div>
 
   
-                            <span className="fl_sl">select an option from below</span>
+                            <span className="fl_sl">Select an option from below</span>
                             <br/>
                             <br/>
                                     <br/>
