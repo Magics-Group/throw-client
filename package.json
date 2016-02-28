@@ -16,7 +16,7 @@
     "release": "grunt release"
   },
   "license": "GPL-3.0",
-  "electron-version": "0.36.7",
+  "electron-version": "0.35.5",
   "dependencies": {
     "alt": "^0.18.2",
     "async": "^1.5.0",
@@ -45,15 +45,17 @@
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-copy": "^0.8.2",
     "grunt-contrib-watch-chokidar": "^1.0.0",
+    "grunt-download-wcjs": "0.0.2",
     "grunt-electron": "^2.0.1",
     "grunt-newer": "^1.1.2",
     "grunt-npm-command": "^0.1.0",
     "grunt-sass": "^1.1.0",
     "grunt-shell": "^1.1.2",
     "grunt-shell-spawn": "^0.3.10",
+    "grunt-vlc-libs": "0.0.1",
     "load-grunt-tasks": "^3.3.0"
   },
   "optionalDependencies": {
-    "electron-prebuilt": "0.36.7"
+    "electron-prebuilt": "0.35.5"
   }
 }

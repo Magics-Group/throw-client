@@ -14,6 +14,7 @@ cache
 
 # Custom
 build
+bin
 dist
 release
 node_modules

@@ -15,6 +15,23 @@ module.exports = function(grunt) {
 
     var platform = grunt.option('platform') ? grunt.option('platform') : process.platform;
 
+
+    var os;
+    switch (process.platform) {
+        case 'win32':
+            os = 'win';
+            break;
+        case 'linux':
+            os = 'linux';
+            break;
+        case 'darwin':
+            os = 'osx';
+            break;
+        default:
+            os = process.platform;
+    }
+
+
     var env = process.env;
     env.NODE_ENV = 'development';
 
@@ -46,14 +63,32 @@ module.exports = function(grunt) {
                     dest: 'build/images/'
                 }]
             },
-            game: {
+            videoDev: {
                 files: [{
                     expand: true,
-                    cwd: 'game/',
+                    cwd: 'bin/vlc',
                     src: ['**/*'],
-                    dest: 'build/game/'
+                    dest: 'build/bin/'
+                }, {
+                    expand: true,
+                    cwd: 'bin/wcjs',
+                    src: ['**/*'],
+                    dest: 'build/bin/'
                 }]
-            }
+            },
+            videoWin: {
+                files: [{
+                    expand: true,
+                    cwd: 'bin/vlc',
+                    src: ['**/*'],
+                    dest: 'dist/' + BASENAME + '-win32-' + arch + '/resources/bin'
+                }, {
+                    expand: true,
+                    cwd: 'bin/wcjs',
+                    src: ['**/*'],
+                    dest: 'dist/' + BASENAME + '-win32-' + arch + '/resources/bin'
+                }]
+            },
         },
         sass: {
             options: {
@@ -95,6 +130,27 @@ module.exports = function(grunt) {
                 }
             }
         },
+        vlc_libs: {
+            options: {
+                dir: 'bin/vlc',
+                force: true,
+                arch: arch,
+                platform: os
+            }
+        },
+        wcjs: {
+            options: {
+                version: 'latest',
+                dir: 'bin/wcjs',
+                force: true,
+                runtime: {
+                    type: 'electron',
+                    version: '0.33.9',
+                    arch: arch,
+                    platform: os
+                }
+            }
+        },
         'npm-command': {
             release: {
                 options: {
@@ -116,7 +172,7 @@ module.exports = function(grunt) {
                 options: {
                     livereload: 27871
                 },
-                files: ['build/**/*', '!build/game/**/*']
+                files: ['build/**/*', '!build/bin/**/*']
             },
             js: {
                 files: ['src/**/*.js'],
@@ -134,6 +190,8 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('default', ['newer:babel', 'sass', 'newer:copy:build', 'shell:electron', 'watchChokidar']);
+
+    grunt.registerTask('deps', ['vlc_libs', 'wcjs']);
 
     grunt.registerTask('run', ['newer:babel', 'shell:electron', 'watchChokidar']);
 
