@@ -12,7 +12,7 @@
 
 ### Where's the beef!
 
-Pre-built binarys & setup files can be found in the [Releases Tab](https://github.com/luigiplr/netify-jump/releases).
+Pre-built binarys & setup files can be found in the [Releases Tab](https://github.com/Magics-Group/throw-client/releases).
 
 <br>
 
