@@ -92,8 +92,9 @@ export default class PlayerEvents extends EventEmitter {
                     let authed = false
 
 
-                    socket.emit('title', this.title)
 
+                    socket.on('pin', pin => authed = (this.PIN === pin))
+                    socket.emit('title', this.title)
                     socket.on('position', percent => {
                         if (!authed) return
                         const scrobbleTime = this._wcjs.totalTime * percent
@@ -114,7 +115,6 @@ export default class PlayerEvents extends EventEmitter {
 
 
 
-                    this.on('pin', pin => authed = (this.PIN === pin))
                     this.on('position', position => socket.emit('position', position))
                     this.on('time', time => socket.emit('time', time))
                     this.on('length', length => socket.emit('length', length))
