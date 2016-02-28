@@ -138,7 +138,7 @@ default class extends React.Component {
         const [CurrentTime, TotalTime, ScrobbleTime] = this._getHumanTime([this.state.time, this.state.totalTime, this.state.scrobbleTime])
 
         return (
-            <div className={'control-bar ' + (this.props.uiShown ? 'show' : null)} >
+            <div className={'control-bar ' + (this.props.uiShown ? 'show' : null)}>
                 <div 
                     onMouseDown={() => this.setState({scrobbling: true})} 
                     onMouseUp={() => this._handleScrobble()}

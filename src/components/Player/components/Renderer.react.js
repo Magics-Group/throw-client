@@ -93,7 +93,7 @@ default class extends React.Component {
         };
         return (
             <div ref="canvas-holder" className="canvas-holder" style={renderStyles.container}>
-                <canvas id="playerCanvas" style={renderStyles.canvas}  ref="wcjs-render" />
+                <canvas id="playerCanvas" style={renderStyles.canvas}  ref="wcjs-render" onClick={() => this.props.emitter.emit('togglePause')}/>
             </div>
         );
     }
