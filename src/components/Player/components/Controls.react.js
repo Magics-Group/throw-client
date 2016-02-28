@@ -29,7 +29,9 @@ default class extends React.Component {
 
         scrobbling: false,
         scrobblePercent: 0,
-        scrobbleTime: 0
+        scrobbleTime: 0,
+
+        rippleEffects: false
     };
 
     mounted = false;
