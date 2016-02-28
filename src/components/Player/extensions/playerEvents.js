@@ -30,6 +30,8 @@ class PlayerEvents extends EventEmitter {
 
 
         this.on('togglePause', () => this._wcjs.togglePause())
+        this.on('skipForward', () => this._wcjs.time += 30000)
+        this.on('skipBackward', () => this._wcjs.time -= 30000)
 
         this.on('play', url => this._wcjs.play(url));
         this.on('volumeChange', volume => {
