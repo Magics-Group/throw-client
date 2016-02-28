@@ -1,0 +1,143 @@
+.wrapper {
+  font-family: 'Droid Sans', sans-serif;
+  display: table-cell;
+  height: 100%;
+  vertical-align: middle;
+  padding-top: 30px;
+}
+
+.wrapper .holder {
+  border: 1px dashed #ccc;
+  min-width: 580px;
+  min-height: 380px;
+  width: 90%;
+  height: 70%;
+  max-width: 726px;
+  max-height: 525px;
+  background: #f4f4f4;
+  margin: 20px;
+}
+
+.wrapper .logoBig {
+  margin-top: 47px;
+  margin-bottom: 13px;
+}
+
+.wrapper .fl_dd {
+  font-size: 36px;
+  font-weight: 500;
+  color: #767a7b;
+  display: inline-block;
+  margin-bottom: 2px
+}
+.wrapper .fl_sl {
+  font-size: 21px;
+  color: #767a7b;
+  font-weight: 300;
+  margin-top: 13px;
+  display: inline-block;
+  margin-bottom: 11px;
+  font-family: 'Droid Sans', sans-serif;
+}
+
+.wrapper .settings {
+  width: 46px !important;
+  height: 46px;
+  top: -5px;
+  float: right;
+}
+
+.wrapper .torrent-dash {
+  float: right;
+  top: -5px;
+  margin-right: -6px;
+}
+
+.wrapper .mainButHold { 
+  width: 450px 
+}
+
+.mainButtonHolder {
+  float: right;
+  position: relative;
+  width: 100%;
+}
+
+.inButtonHolder {
+  position: absolute;
+  width: 100%;
+}
+
+.wrapper .holder {
+  background: rgb(244, 244, 244) !important;
+  border: 3px dashed rgb(204, 204, 204) !important;
+  box-shadow: none !important;
+}
+
+
+#main, #app {
+    height: 100%;
+    width: 100%;
+    display: table;
+}
+
+#main .holder {
+    min-height: 428px;
+}
+
+#main .holder-hover {
+    border-color: #383838 !important;
+}
+
+#main .mainButHold div > button > div > div > span:first-of-type {
+    display: none
+}
+
+#main .mainButHold div > button > div {
+    height: 100%;
+}
+
+#main .mainButHold > div:first-of-type button {
+    background: rgb(0, 184, 80) !important;
+}
+
+#main .mainButHold > div:first-of-type + div button {
+    background: rgb(28, 168, 237) !important;
+}
+
+#main .mainButHold > div:first-of-type + div + div button {
+    background: rgb(241, 102, 79) !important;
+}
+
+#main .mainButHold .lbl {
+    color: #fff;
+    font-size: 17px;
+}
+
+.loader {
+    height: 4px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: #ddd;
+}
+
+.loader:before{
+    display: block;
+    position: absolute;
+    content: "";
+    left: -200px;
+    width: 200px;
+    height: 4px;
+    background-color: #00bcd4;
+    animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+    from {left: -200px; width: 30%;}
+    50% {width: 30%;}
+    70% {width: 70%;}
+    80% { left: 50%;}
+    95% {left: 120%;}
+    to {left: 100%;}
+}
