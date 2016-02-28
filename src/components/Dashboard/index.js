@@ -8,10 +8,18 @@ from 'material-ui'
 import torrentEngine from '../../utils/torrent'
 
 
+
+class If extends React.Component {
+    render() {
+        return this.props.test ? this.props.children : null
+    }
+}
+
 export default class Dashboard extends React.Component {
 
     state = {
-        torrentAddOpen: false
+        torrentAddOpen: false,
+        loadingModal: false
     };
 
     addTorrent() {
@@ -19,9 +27,7 @@ export default class Dashboard extends React.Component {
 
         if (!torrent || !torrent.length > 0) return
 
-        this.setState({
-            torrentAddOpen: false
-        })
+
         this.streamTorrent(torrent)
     }
 
@@ -31,12 +37,25 @@ export default class Dashboard extends React.Component {
 
         console.log(torrent)
         torrentEngine.init(torrent)
-            .then(engine => engine.on('ready', () => this.props.setUrl(`http://localhost:${engine['stream-port']}`)))
+            .then(engine => {
+                this.setState({
+                    loadingModal: true
+                })
+                engine.on('ready', () => {
+                    this.setState({
+                        loadingModal: false,
+                        torrentAddOpen: false
+                    })
+                    this.props.setUrl(`http://localhost:${engine['stream-port']}`)
+                })
+            })
     };
 
     render() {
 
         if (!this.props.open) return null
+
+
 
         return (
             <div className="wrapper">
@@ -81,14 +100,22 @@ export default class Dashboard extends React.Component {
                             </div>
 
         					<Dialog
-          						title="Dialog With Actions"
-          						modal={false}
+          						title={this.state.loadingModal ? 'Loading...' : 'Stream Torrent'}
+          						modal={true}
           						open={this.state.torrentAddOpen}
           						onRequestClose={() => this.setState({torrentAddOpen: false})}
         					>
-        					    <TextField ref="torrent-text" style={{'marginBottom': '15px' }} fullWidth={true} onEnterKeyDown={() => this.addTorrent()} hintText="Magnet/Torrent URI or Video URL" />
-                				<RaisedButton secondary={true} onClick={() => this.addTorrent()} style={{float: 'right', }} label="Stream" />
-                				<RaisedButton onClick={() => this.setState({torrentAddOpen: false})} style={{float: 'right', 'marginRight': '10px' }} label="Cancel" />
+                                <If test={!this.state.loadingModal}>
+                                    <div>
+        					        <TextField ref="torrent-text" style={{'marginBottom': '15px' }} fullWidth={true} onEnterKeyDown={() => this.addTorrent()} hintText="Magnet/Torrent URI or Video URL" />
+                				    <RaisedButton secondary={true} onClick={() => this.addTorrent()} style={{float: 'right', }} label="Stream" />
+                                    <RaisedButton onClick={() => this.setState({torrentAddOpen: false})} style={{float: 'right', 'marginRight': '10px' }} label="Cancel" />
+                                    </div>
+                                </If>
+                                <If test={this.state.loadingModal}>
+                                    <div className="loader"/>
+                                </If>
+
                 			</Dialog>
                         </div>
                     </div>
