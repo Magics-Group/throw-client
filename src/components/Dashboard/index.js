@@ -66,6 +66,7 @@ export default class Dashboard extends React.Component {
                             <div className="mainButtonHolder">
                                  <div className="inButtonHolder">
                                     <IconButton iconClassName="material-icons" iconStyle={{color: '#767A7B', fontSize: '30px', top: '-2px', right: '2px'}} className="settings" >settings</IconButton>
+                                    <IconButton iconClassName="material-icons" onClick={() => this.context.history.replace('/about')} iconStyle={{color: '#767A7B', fontSize: '30px', top: '-2px', right: '2px'}} className="settings" >info</IconButton>
                                     <IconButton iconClassName="material-icons" iconStyle={{color: '#767A7B', fontSize: '30px', top: '-2px', right: '2px'}} className="torrent-dash" >view_compact</IconButton>
                                 </div>
                             </div>
