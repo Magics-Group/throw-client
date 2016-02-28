@@ -4,6 +4,10 @@
 
  - PC running Windows 7 or above.
 
+### Known Issues
+
+ - QR Code Generator 
+
 ### Screenshots
 
 <img src="preview/Dashboard.PNG" alt="Dashboard" width="34%"/>
@@ -19,6 +23,7 @@ Pre-built binarys & setup files can be found in the [Releases Tab](https://githu
 
 ### Getting Started
 
+- `npm install grunt-cli -g`
 - `npm install`
 
 To run the app in development:
