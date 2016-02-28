@@ -89,12 +89,12 @@ export default class PlayerEvents extends EventEmitter {
                 this.ioServer = socketIO()
 
                 this.ioServer.on('connection', socket => {
-                    let authed = false
+                    let authed = true
 
 
 
                     socket.on('pin', pin => {
-                        authed = pin === this.PIN
+                        //  authed = pin === this.PIN
                     })
                     socket.emit('title', this.title)
                     socket.on('position', percent => {
@@ -102,16 +102,16 @@ export default class PlayerEvents extends EventEmitter {
                         const scrobbleTime = this._wcjs.totalTime * percent
 
                     })
-                    socket.on('playing', status => {
+                    socket.on('playing', () => {
                         if (authed) this.emit('togglePause')
                     })
-                    socket.on('muted', status => {
+                    socket.on('muted', () => {
                         if (authed) this.emit('toggleMute')
                     })
-                    socket.on('forward', status => {
+                    socket.on('forward', () => {
                         if (authed) this.emit('skipForward')
                     })
-                    socket.on('backward', status => {
+                    socket.on('backward', () => {
                         if (authed) this.emit('skipBackward')
                     })
 
