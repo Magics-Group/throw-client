@@ -31,7 +31,7 @@ export default class Dashboard extends React.Component {
 
         console.log(torrent)
         torrentEngine.init(torrent)
-            .then(torrent => _.defer(() => this.props.setUrl(`http://localhost:${torrent['stream-port']}`)))
+            .then(engine => engine.on('ready', () => this.props.setUrl(`http://localhost:${engine['stream-port']}`)))
     };
 
     render() {

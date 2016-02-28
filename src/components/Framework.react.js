@@ -20,12 +20,10 @@ export default class Framework extends React.Component {
         injectTapEventPlugin()
     }
 
-    setUrl = url => {
-        this.setState({
-            url,
-            PlayerOpen: true
-        })
-    }
+    setUrl = url => this.setState({
+        url,
+        PlayerOpen: true
+    });
 
     render() {
         return (

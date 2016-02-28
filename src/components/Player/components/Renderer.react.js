@@ -64,6 +64,11 @@ default class extends React.Component {
 
         this.props.emitter.on('error', err => console.error(err))
 
+
+        this.props.emitter.on('buffering', buff => console.log(buff))
+
+        this.props.emitter.on('opening', buff => console.log('OPENING'))
+
         console.log(wcjsInstance, this.props.url)
 
         wcjsInstance.play(this.props.url)

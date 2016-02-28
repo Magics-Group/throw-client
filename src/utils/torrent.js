@@ -21,6 +21,7 @@ module.exports = {
     streams: {},
 
     init(torrent) {
+
         return Promise.all([this.read(torrent), getPort()])
             .spread((torrentInfo, port) => {
                 let engine = peerflix(torrentInfo, {
@@ -32,8 +33,11 @@ module.exports = {
                 });
                 this.streams[engine.infoHash] = engine;
                 engine['stream-port'] = port;
-                return engine;
+        
+                return engine
             });
+
+
     },
     destroy(infoHash) {
         if (this.streams[infoHash]) {
@@ -43,9 +47,7 @@ module.exports = {
         }
     },
     read(torrent) {
-        return new Promise((resolve, reject) => readTorrent(torrent, (err, parsedTorrent) => {
-            return (err || !parsedTorrent) ? reject(err) : resolve(parsedTorrent)
-        }))
+        return new Promise((resolve, reject) => readTorrent(torrent, (err, parsedTorrent) => (err || !parsedTorrent) ? reject(err) : resolve(parsedTorrent)))
     },
     getContents(files, infoHash) {
         return new Promise(resolve => {
@@ -64,18 +66,10 @@ module.exports = {
                 files[fileID].fileID = fileID;
             }
 
-            if (files_total > 1) {
-                if (parser(files_firstName).shortSzEp()) {
-                    files = sorter.episodes(files, 2);
-                } else {
-                    files = sorter.naturalSort(files, 2);
-                }
-            }
-
-            for (var fileID in files) {
-                var file = files[fileID];
-                var fileParams = path.parse(file.path);
-                var streamable = (supported.all.indexOf(fileParams.ext) > -1);
+            for (let fileID in files) {
+                let file = files[fileID];
+                let fileParams = path.parse(file.path);
+                let streamable = (supported.all.indexOf(fileParams.ext) > -1);
 
                 if (streamable) {
                     if (!files_organized.ordered)
@@ -93,9 +87,7 @@ module.exports = {
                 }
             }
 
-            directorys = directorys.filter(dir => {
-                return !seen.has(dir) && seen.add(dir);
-            });
+            directorys = directorys.filter(dir => !seen.has(dir) && seen.add(dir));
             files_organized['folder_status'] = (directorys.length > 1);
             files_organized['files_total'] = files_total;
             resolve(files_organized);
