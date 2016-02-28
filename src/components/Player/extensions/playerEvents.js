@@ -81,7 +81,7 @@ export default class PlayerEvents extends EventEmitter {
         })
 
 
-        this.PIN = Math.floor(Math.random() * 5) + 1
+        this.PIN = Math.floor(Math.random() * 5) + 1001
 
         Promise.all([getInternalIP(), getPort()])
             .spread((ip, port) => {
@@ -126,6 +126,7 @@ export default class PlayerEvents extends EventEmitter {
                 })
 
                 this.ioServer.listen(port)
+                console.log(`PlayerAPI socket server running @ ${ip}:${port} w/ PIN of ${this.PIN}`)
                 this.emit('qrCode', <ReactQR text={JSON.stringify({pin: this.PIN,ip,port})} />)
             })
     }

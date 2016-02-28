@@ -47,7 +47,6 @@ export default class Dashboard extends React.Component {
             title: path.basename(url),
             url
         })
-        this.props.setUrl(url)
     };
 
 
