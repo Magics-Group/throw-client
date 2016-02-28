@@ -9,7 +9,7 @@ from 'material-ui';
 import {
     app
 }
-from 'electron';
+from 'remote';
 
 import PlayerActions from '../actions';
 import PlayerStore from '../store';

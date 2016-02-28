@@ -85,27 +85,51 @@ export default class PlayerEvents extends EventEmitter {
                 this.ioServer = socketIO()
 
                 this.ioServer.on('connection', socket => {
-                    console.log(socket)
                     let authed = false
 
+                    socket.on('position', percent => {
+                        if (!authed) return
+                        const scrobbleTime = this._wcjs.totalTime * percent
+
+                    })
+                    socket.on('playing', status => {
+                        if (authed) this.emit('togglePause')
+                    })
+                    socket.on('muted', status => {
+                        if (authed) this.emit('toggleMute')
+                    })
+                    socket.on('forward', status => {
+                        if (authed) this.emit('skipForward')
+                    })
+                    socket.on('backward', status => {
+                        if (authed) this.emit('skipBackward')
+                    })
 
 
-                    socket.on('playing', status => this.emit('togglePause'))
 
-
-                    this.on('auth', pin => authed = (this.PIN === pin))
-                    this.on('position', position => socket.emit('position', position))
-                    this.on('time', time => socket.emit('time', time))
-                    this.on('length', length => socket.emit('length', length))
-                    this.on('playing', playing => socket.emit('playing', playing))
-                    this.on('ended', () => socket.emit('ended'))
+                    this.on('pin', pin => authed = (this.PIN === pin))
+                    this.on('position', position => {
+                        if (authed) socket.emit('position', position)
+                    })
+                    this.on('time', time => {
+                        if (authed) socket.emit('time', time)
+                    })
+                    this.on('length', length => {
+                        if (authed) socket.emit('length', length)
+                    })
+                    this.on('playing', playing => {
+                        if (authed) returnsocket.emit('playing', playing)
+                    })
+                    this.on('ended', () => {
+                        if (authed) socket.emit('ended')
+                    })
                     this.on('closed', () => {
-                        socket.emit('ended')
+                        if (authed) socket.emit('ended')
                         socket.disconnect()
                     })
                 })
 
-                this.ioServer.listen(1337)
+                this.ioServer.listen(port)
                 this.emit('qrCode', <ReactQR text={JSON.stringify({pin: this.PIN,ip,port})} />)
             })
     }

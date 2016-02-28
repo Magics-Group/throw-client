@@ -10,7 +10,7 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
     var target = grunt.option('target') || 'development';
 
-    var BASENAME = 'Throw';
+    var BASENAME = 'Throw-Player';
     var arch = grunt.option('arch') ? grunt.option('arch') : 'x64';
 
     var platform = grunt.option('platform') ? grunt.option('platform') : process.platform;
@@ -18,6 +18,7 @@ module.exports = function(grunt) {
 
     var os;
     switch (process.platform) {
+        case 'win64':
         case 'win32':
             os = 'win';
             break;
@@ -74,6 +75,19 @@ module.exports = function(grunt) {
                     cwd: 'bin/wcjs',
                     src: ['**/*'],
                     dest: 'build/bin/'
+                }]
+            },
+            videowin32: {
+                files: [{
+                    expand: true,
+                    cwd: 'bin/vlc',
+                    src: ['**/*'],
+                    dest: 'dist/' + BASENAME + '-win32-' + arch + '/resources/bin'
+                }, {
+                    expand: true,
+                    cwd: 'bin/wcjs',
+                    src: ['**/*'],
+                    dest: 'dist/' + BASENAME + '-win32-' + arch + '/resources/bin'
                 }]
             }
         },
@@ -184,7 +198,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('clean:all', ['clean:build', 'clean:dist', 'clean:release']);
 
-    grunt.registerTask('release', ['clean:build', 'babel', 'sass', 'copy:build', 'npm-command:release', 'electron:release']);
+    grunt.registerTask('release', ['clean:build', 'babel', 'sass', 'copy:build', 'npm-command:release', 'electron:release', 'copy:video' + platform]);
 
     process.on('SIGINT', () => {
         grunt.task.run(['shell:electron:kill'])
