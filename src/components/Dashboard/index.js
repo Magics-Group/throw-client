@@ -1,66 +1,45 @@
 import React from 'react'
 import _ from 'lodash'
 import {
-	PropTypes
-}
-from 'react-router'
-import {
-	RaisedButton, Paper, IconButton, Dialog, TextField
+    RaisedButton, Paper, IconButton, Dialog, TextField
 }
 from 'material-ui'
 
-
-import AppActions from '../../actions/appActions'
 import torrentEngine from '../../utils/torrent'
 
 
 export default class Dashboard extends React.Component {
 
-	state = {
-		torrentAddOpen: false
-	};
+    state = {
+        torrentAddOpen: false
+    };
 
-	static contextTypes = {
-		history: PropTypes.history
-	};
+    addTorrent() {
+        const torrent = this.refs['torrent-text'].getValue()
 
-	addTorrent() {
-		const torrent = this.refs['torrent-text'].getValue()
+        if (!torrent || !torrent.length > 0) return
 
-		if (!torrent || !torrent.length > 0) return
-
-		this.setState({
-			torrentAddOpen: false
-		})
-		this.streamTorrent(torrent)
-	}
-
-	addFile(event) {
+        this.setState({
+            torrentAddOpen: false
+        })
+        this.streamTorrent(torrent)
+    }
 
 
+    streamTorrent = (torrent = false) => {
+        if (!torrent) return console.error('No torrent defined something has gone horribly wrong!')
 
-	}
+        console.log(torrent)
+        torrentEngine.init(torrent)
+            .then(torrent => {
+                const url = `http://127.0.0.1:${torrent['stream-port']}`
+                this.props.setUrl(url)
+            })
+    };
 
-	streamTorrent = (torrent = false) => {
-		if (!torrent) return console.error('No torrent defined something has gone horribly wrong!')
-
-		console.log(torrent)
-		torrentEngine.init(torrent)
-			.then(torrent => {
-				AppActions.stream(`http://127.0.0.1:${torrent['stream-port']}`)
-				_.defer(() => this.context.history.push({
-					pathname: '/player',
-					query: {
-						url: `http://127.0.0.1:${torrent['stream-port']}`
-					}
-				}))
-
-			})
-	};
-
-	render() {
-		return (
-			<div className="wrapper">
+    render() {
+        return (
+            <div className="wrapper">
                <center>
                     <div ref="dropper">
                         <div>
@@ -115,6 +94,6 @@ export default class Dashboard extends React.Component {
                     </div>
                </center>
             </div>
-		)
-	}
+        )
+    }
 }

@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Router from 'react-router';
 import yargs from 'yargs';
 import webUtil from './js/utils/webUtil';
-import routes from './js/routes';
+import Framework from './js/components/Framework.react'
 
 webUtil.disableGlobalBackspace();
 
-ReactDOM.render(<Router>{routes}</Router>, document.getElementById('app'));
+ReactDOM.render(<Framework />, document.getElementById('app'));
