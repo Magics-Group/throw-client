@@ -13,11 +13,10 @@ class Header extends React.Component {
         pairingOpen: false
     }
 
-    shouldComponentUpdate(nextProps) {
-        if (nextProps.uiShown !== this.props.uiShown || nextProps.title !== this.props.title)
-            return true;
-
-        return false;
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.uiShown !== this.props.uiShown || nextProps.title !== this.props.title || nextState.pairingOpen !== this.state.pairingOpen)
+            return true
+        return false
     }
 
     _handelClose() {
@@ -46,6 +45,7 @@ class Header extends React.Component {
                     onRequestClose={() => this.setState({pairingOpen: false})}
                     >
                     {this.state.qrCode}
+
                     <RaisedButton onClick={() => this.setState({pairingOpen: false})} style={{float: 'right', 'marginRight': '10px' }} label="Close" />  
                 </Dialog>
             </div>
