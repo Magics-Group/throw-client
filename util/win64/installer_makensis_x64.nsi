@@ -37,7 +37,7 @@ Unicode True
 
 !define COMPANY_NAME "Magics"
 !define PRODUCT_VERSION "${LIBRARIAN_VERSION}" 
-!define APP_NAME "Throw Player"
+!define APP_NAME "Throw-Player"
 
 
 Name "${APP_NAME}"

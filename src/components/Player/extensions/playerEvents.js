@@ -82,19 +82,19 @@ export default class PlayerEvents extends EventEmitter {
         })
 
 
-        this.PIN = ('0' + Math.floor(Math.random() * (9999 - 0 + 1)) + 0).substr(-4)
+        this.PIN = parseInt(('0' + Math.floor(Math.random() * (9999 - 0 + 1)) + 0).substr(-4))
 
         Promise.all([getInternalIP(), getPort()])
             .spread((ip, port) => {
                 this.ioServer = socketIO()
 
                 this.ioServer.on('connection', socket => {
-                    let authed = true
+                    let authed = false
 
 
 
                     socket.on('pin', pin => {
-                        //  authed = pin === this.PIN
+                        authed = parseInt(pin) === parseInt(this.PIN)
                     })
                     socket.emit('title', this.title)
                     socket.on('position', percent => {
