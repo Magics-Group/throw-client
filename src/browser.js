@@ -17,7 +17,7 @@ app.on('ready', () => {
         'standard-window': true,
         'auto-hide-menu-bar': true,
         resizable: true,
-        title: 'Throw',
+        title: 'Throw Player',
         center: true,
         frame: true,
         show: false
@@ -43,7 +43,7 @@ app.on('ready', () => {
     });
 
     mainWindow.webContents.on('did-finish-load', () => {
-        mainWindow.setTitle('Throw');
+        mainWindow.setTitle('Throw Player');
         mainWindow.show();
         mainWindow.focus();
     });
