@@ -28,6 +28,9 @@ class PlayerEvents extends EventEmitter {
             this._wcjs.onMediaChanged = () => this.emit('changed');
         });
 
+
+        this.on('togglePause', () => this._wcjs.togglePause())
+
         this.on('play', url => this._wcjs.play(url));
         this.on('volumeChange', volume => {
             this._wcjs.volume = volume;
@@ -35,7 +38,7 @@ class PlayerEvents extends EventEmitter {
         });
         this.on('close', () => {
             this._wcjs.stop()
-            const events = ['opening', 'position', 'time', 'volume', 'buffering', 'length', 'seekable', 'playing', 'ended', 'changed', 'mouseMove', 'closed'];
+            const events = ['opening', 'position', 'time', 'volume', 'buffering', 'length', 'seekable', 'playing', 'togglePause', 'ended', 'changed', 'mouseMove', 'closed'];
             events.forEach(event => this.removeAllListeners(event));
             this.emit('closed');
         });
