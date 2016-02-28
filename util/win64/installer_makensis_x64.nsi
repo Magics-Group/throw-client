@@ -73,13 +73,13 @@ RequestExecutionLevel user
 ; ------------------- ;
 ;Define UI settings
 !ifdef WIN_PATHS
-    !define MUI_UI_HEADERIMAGE_RIGHT "..\images\icon.ico"
-    !define MUI_ICON "..\images\icon.ico"
-    !define MUI_UNICON "..\images\icon.ico"
+    !define MUI_UI_HEADERIMAGE_RIGHT "..\..\images\icon.ico"
+    !define MUI_ICON "..\..\images\icon.ico"
+    !define MUI_UNICON "..\..\images\icon.ico"
 !else
-    !define MUI_UI_HEADERIMAGE_RIGHT "../images/icon.ico"
-    !define MUI_ICON "../images/icon.ico"
-    !define MUI_UNICON "../images/icon.ico"
+    !define MUI_UI_HEADERIMAGE_RIGHT "../../images/icon.ico"
+    !define MUI_ICON "../../images/icon.ico"
+    !define MUI_UNICON "../../images/icon.ico"
 !endif
 !define MUI_ABORTWARNING
 !define MUI_FINISHPAGE_LINK "${APP_URL}"
@@ -93,9 +93,9 @@ RequestExecutionLevel user
 ;Define the pages
 !insertmacro MUI_PAGE_WELCOME
 !ifdef WIN_PATHS
-    !insertmacro MUI_PAGE_LICENSE "..\..\LICENSE.md"
+    !insertmacro MUI_PAGE_LICENSE "..\..\LICENSE"
 !else
-    !insertmacro MUI_PAGE_LICENSE "../../LICENSE.md"
+    !insertmacro MUI_PAGE_LICENSE "../../LICENSE"
 !endif
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
