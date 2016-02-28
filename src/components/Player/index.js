@@ -19,7 +19,7 @@ default class Player extends React.Component {
 		title: this.props.title
 	};
 
-	emitter = new PlayerEvents();
+	emitter = new PlayerEvents(this.props.title);
 
 	componentWillMount() {
 		PlayerStore.listen(this._update);

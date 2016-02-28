@@ -27,8 +27,11 @@ const getInternalIP = () => {
 }
 
 export default class PlayerEvents extends EventEmitter {
-    constructor() {
+    constructor(title) {
         super()
+
+        this.title = title
+
 
         this.on('wcjsLoaded', wcjs => {
             this._wcjs = wcjs
@@ -87,6 +90,9 @@ export default class PlayerEvents extends EventEmitter {
                 this.ioServer.on('connection', socket => {
                     let authed = false
 
+
+                    socket.emit('title', this.title)
+
                     socket.on('position', percent => {
                         if (!authed) return
                         const scrobbleTime = this._wcjs.totalTime * percent
@@ -108,23 +114,13 @@ export default class PlayerEvents extends EventEmitter {
 
 
                     this.on('pin', pin => authed = (this.PIN === pin))
-                    this.on('position', position => {
-                        if (authed) socket.emit('position', position)
-                    })
-                    this.on('time', time => {
-                        if (authed) socket.emit('time', time)
-                    })
-                    this.on('length', length => {
-                        if (authed) socket.emit('length', length)
-                    })
-                    this.on('playing', playing => {
-                        if (authed) returnsocket.emit('playing', playing)
-                    })
-                    this.on('ended', () => {
-                        if (authed) socket.emit('ended')
-                    })
+                    this.on('position', position => socket.emit('position', position))
+                    this.on('time', time => socket.emit('time', time))
+                    this.on('length', length => socket.emit('length', length))
+                    this.on('playing', playing => returnsocket.emit('playing', playing))
+                    this.on('ended', () => socket.emit('ended'))
                     this.on('closed', () => {
-                        if (authed) socket.emit('ended')
+                        socket.emit('ended')
                         socket.disconnect()
                     })
                 })

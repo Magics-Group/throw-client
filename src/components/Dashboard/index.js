@@ -4,7 +4,6 @@ import {
     RaisedButton, Paper, IconButton, Dialog, TextField
 }
 from 'material-ui'
-import urlNode from 'url'
 import path from 'path'
 import {
     dialog
@@ -45,7 +44,7 @@ export default class Dashboard extends React.Component {
             urlAddOpen: false
         })
         this.props.openPlayer({
-            title: urlNode.parse(url).pathname,
+            title: path.basename(url),
             url
         })
         this.props.setUrl(url)
@@ -62,7 +61,6 @@ export default class Dashboard extends React.Component {
             title: path.basename(filename)
         })
     };
-
 
 
     streamTorrent = (torrent = false) => {
