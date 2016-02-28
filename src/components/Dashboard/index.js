@@ -1,5 +1,8 @@
 import React from 'react'
-
+import {
+	PropTypes
+}
+from 'react-router';
 
 
 import {
@@ -17,8 +20,12 @@ export default class Dashboard extends React.Component {
 		torrentAddOpen: false
 	};
 
+	static contextTypes = {
+		history: PropTypes.history
+	};
 
 	addTorrent() {
+		console.log(this.context)
 		const torrent = this.refs['torrent-text'].getValue()
 
 		if (!torrent || !torrent.length > 0) return
