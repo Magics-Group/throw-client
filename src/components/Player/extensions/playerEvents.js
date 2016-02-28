@@ -76,6 +76,7 @@ export default class PlayerEvents extends EventEmitter {
             const win = remote.getCurrentWindow()
             win.setKiosk(false)
             win.setSize(575, 350)
+            win.setTitle(`Throw Player`)
             win.center()
             this.emit('closed')
         })

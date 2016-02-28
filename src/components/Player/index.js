@@ -3,6 +3,11 @@ import React from 'react'
 import Header from './components/Header.react'
 import Controls from './components/Controls.react'
 import Render from './components/Renderer.react'
+import {
+    remote
+}
+from 'electron'
+
 
 import PlayerEvents from './extensions/playerEvents'
 import PlayerStore from './store'
@@ -30,8 +35,7 @@ default class Player extends React.Component {
 		this.hoverTimeout = setTimeout(() => this.setState({
 			uiShown: false
 		}), 3000);
-
-		const TraktSearch = new TraktMatcher(this.props.title)
+		remote.getCurrentWindow().setTitle(`Throw Player - ${this.props.title}`)
 
 	}
 
