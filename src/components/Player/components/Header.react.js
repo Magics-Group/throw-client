@@ -1,9 +1,5 @@
 ﻿import React from 'react';
 import {
-    PropTypes
-}
-from 'react-router';
-import {
     IconButton
 }
 from 'material-ui';
@@ -11,11 +7,6 @@ from 'material-ui';
 import PlayerActions from '../actions';
 
 class Header extends React.Component {
-
-    static contextTypes = {
-        history: PropTypes.history
-    };
-
     shouldComponentUpdate(nextProps) {
         if (nextProps.uiShown !== this.props.uiShown || nextProps.title !== this.props.title)
             return true;
