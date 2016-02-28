@@ -35,9 +35,9 @@ Unicode True
 ; ------------------- ;
 ;General Settings
 
-!define COMPANY_NAME "Decentralized Library of Alexandria"
+!define COMPANY_NAME "Magics"
 !define PRODUCT_VERSION "${LIBRARIAN_VERSION}" 
-!define APP_NAME "Alexandria Librarian"
+!define APP_NAME "Throw Player"
 
 
 Name "${APP_NAME}"
@@ -73,22 +73,18 @@ RequestExecutionLevel user
 ; ------------------- ;
 ;Define UI settings
 !ifdef WIN_PATHS
-    !define MUI_UI_HEADERIMAGE_RIGHT "..\images\alexandria_icon.ico"
-    !define MUI_ICON "..\images\librarian_icon.ico"
-    !define MUI_UNICON "..\images\librarian_icon.ico"
-    !define MUI_WELCOMEFINISHPAGE_BITMAP "..\images\installer-image.bmp"
-    !define MUI_UNWELCOMEFINISHPAGE_BITMAP "..\images\uninstaller-image.bmp"
+    !define MUI_UI_HEADERIMAGE_RIGHT "..\images\icon.ico"
+    !define MUI_ICON "..\images\icon.ico"
+    !define MUI_UNICON "..\images\icon.ico"
 !else
-    !define MUI_UI_HEADERIMAGE_RIGHT "../images/alexandria_icon.ico"
-    !define MUI_ICON "../images/librarian_icon.ico"
-    !define MUI_UNICON "../images/librarian_icon.ico"
-    !define MUI_WELCOMEFINISHPAGE_BITMAP "../images/installer-image.bmp"
-    !define MUI_UNWELCOMEFINISHPAGE_BITMAP "../images/uninstaller-image.bmp"
+    !define MUI_UI_HEADERIMAGE_RIGHT "../images/icon.ico"
+    !define MUI_ICON "../images/icon.ico"
+    !define MUI_UNICON "../images/icon.ico"
 !endif
 !define MUI_ABORTWARNING
 !define MUI_FINISHPAGE_LINK "${APP_URL}"
 !define MUI_FINISHPAGE_LINK_LOCATION "${APP_URL}"
-!define MUI_FINISHPAGE_RUN "$INSTDIR\ΛLΞXΛNDRIΛ Librarian.exe"
+!define MUI_FINISHPAGE_RUN "$INSTDIR\Throw-Player.exe"
 !define MUI_FINISHPAGE_SHOWREADME ""
 !define MUI_FINISHPAGE_SHOWREADME_NOTCHECKED
 !define MUI_FINISHPAGE_SHOWREADME_TEXT "$(desktopShortcut)"
@@ -373,7 +369,7 @@ Section
 
     ;Add the files
     !ifdef WIN_PATHS
-        File /r "..\..\dist\ΛLΞXΛNDRIΛ Librarian-win32-x64\"
+        File /r "..\..\dist\Throw-Player-win32-x64\"
     !endif
 
     ;Create uninstaller
@@ -390,8 +386,8 @@ Section
     ;Start Menu Shortcut
     RMDir /r "$SMPROGRAMS\${APP_NAME}"
     CreateDirectory "$SMPROGRAMS\${APP_NAME}"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\${APP_NAME}.lnk" "$INSTDIR\ΛLΞXΛNDRIΛ Librarian.exe" "" "$INSTDIR\resources\librarian_icon.ico" "" "" "" "${APP_NAME} ${LIBRARIAN_VERSION}"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Uninstall ${APP_NAME}.lnk" "$INSTDIR\Uninstall.exe" "" "$INSTDIR\resources\librarian_icon.ico" "" "" "" "Uninstall ${APP_NAME}"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\${APP_NAME}.lnk" "$INSTDIR\Throw-Player.exe" "" "$INSTDIR\resources\icon.ico" "" "" "" "${APP_NAME} ${LIBRARIAN_VERSION}"
+    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Uninstall ${APP_NAME}.lnk" "$INSTDIR\Uninstall.exe" "" "$INSTDIR\resources\icon.ico" "" "" "" "Uninstall ${APP_NAME}"
 
     ;Desktop Shortcut
     Delete "$DESKTOP\${APP_NAME}.lnk"
@@ -402,7 +398,7 @@ Section
     WriteRegDWORD HKCU "${UNINSTALL_KEY}" "EstimatedSize" "$0"
     WriteRegStr HKCU "${UNINSTALL_KEY}" "DisplayName" "${APP_NAME}"
     WriteRegStr HKCU "${UNINSTALL_KEY}" "DisplayVersion" "${LIBRARIAN_VERSION}"
-    WriteRegStr HKCU "${UNINSTALL_KEY}" "DisplayIcon" "$INSTDIR\resources\librarian_icon.ico"
+    WriteRegStr HKCU "${UNINSTALL_KEY}" "DisplayIcon" "$INSTDIR\resources\icon.ico"
     WriteRegStr HKCU "${UNINSTALL_KEY}" "Publisher" "${COMPANY_NAME}"
     WriteRegStr HKCU "${UNINSTALL_KEY}" "UninstallString" "$INSTDIR\Uninstall.exe"
     WriteRegStr HKCU "${UNINSTALL_KEY}" "InstallString" "$INSTDIR"
@@ -502,5 +498,5 @@ FunctionEnd
 ;  Desktop Shortcut  ;
 ; ------------------ ;
 Function finishpageaction
-    CreateShortCut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\ΛLΞXΛNDRIΛ Librarian.exe" "" "$INSTDIR\resources\librarian_icon.ico" "" "" "" "${APP_NAME} ${LIBRARIAN_VERSION}"
+    CreateShortCut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\Throw-Player.exe" "" "$INSTDIR\resources\icon.ico" "" "" "" "${APP_NAME} ${LIBRARIAN_VERSION}"
 FunctionEnd
