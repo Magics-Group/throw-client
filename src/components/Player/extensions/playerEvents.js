@@ -82,7 +82,7 @@ export default class PlayerEvents extends EventEmitter {
         })
 
 
-        this.PIN = Math.floor(Math.random() * 5) + 1001
+        this.PIN = ('0' + Math.floor(Math.random() * (9999 - 0 + 1)) + 0).substr(-4)
 
         Promise.all([getInternalIP(), getPort()])
             .spread((ip, port) => {
@@ -112,7 +112,6 @@ export default class PlayerEvents extends EventEmitter {
                     socket.on('backward', status => {
                         if (authed) this.emit('skipBackward')
                     })
-
 
 
                     this.on('position', position => socket.emit('position', position))

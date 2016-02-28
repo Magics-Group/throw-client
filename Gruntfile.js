@@ -77,7 +77,7 @@ module.exports = function(grunt) {
                     dest: 'build/bin/'
                 }]
             },
-            videowin32: {
+            videowin: {
                 files: [{
                     expand: true,
                     cwd: 'bin/vlc',
@@ -198,7 +198,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('clean:all', ['clean:build', 'clean:dist', 'clean:release']);
 
-    grunt.registerTask('release', ['clean:build', 'babel', 'sass', 'copy:build', 'npm-command:release', 'electron:release', 'copy:video' + platform]);
+    grunt.registerTask('release', ['clean:build', 'babel', 'sass', 'copy:build', 'npm-command:release', 'electron:release', 'copy:video' + os]);
 
     process.on('SIGINT', () => {
         grunt.task.run(['shell:electron:kill'])
