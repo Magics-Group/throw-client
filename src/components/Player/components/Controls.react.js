@@ -147,7 +147,8 @@ default class extends React.Component {
                     <div ref="scrobbler-handle" className="handle"/>
                 </div>
 
-                <IconButton onClick={() => this.props.wcjs.togglePause()} iconClassName="material-icons" iconStyle={{top: '-5px', left: '-1px'}} className={this.state.rippleEffects ? 'play-toggle' : 'play-toggle no-ripples'}>{this.state.playing ? 'pause' : 'play_arrow'}</IconButton>
+    				<IconButton onClick={() => this.props.wcjs.togglePause()} iconClassName="material-icons" className={this.state.rippleEffects ? 'play-toggle' : 'play-toggle no-ripples'}>{this.state.playing ? 'pause' : 'play_arrow'}</IconButton>
+
                 <IconButton iconClassName="material-icons" iconStyle={{top: '-6px'}} className="prev-button">{'skip_previous'}</IconButton>
                 <IconButton iconClassName="material-icons" iconStyle={{top: '-6px'}} className="next-button">{'skip_next'}</IconButton>
 
