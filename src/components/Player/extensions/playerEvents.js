@@ -94,8 +94,7 @@ export default class PlayerEvents extends EventEmitter {
 
 
                     socket.on('pin', pin => {
-
-                        console.log(pin, this.PIN)
+                        authed = pin === this.PIN
                     })
                     socket.emit('title', this.title)
                     socket.on('position', percent => {
