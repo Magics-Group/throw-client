@@ -29,7 +29,6 @@ class Header extends React.Component {
     }
 
     render() {
-        console.log('player header render', this)
         const showHeader = this.props.uiShown;
         return (
             <div className={showHeader ? 'header show' : 'header' }>

@@ -47,13 +47,14 @@ export default class Dashboard extends React.Component {
 		console.log(torrent)
 		torrentEngine.init(torrent)
 			.then(torrent => {
-				_.defer(() => {
-					const streamUrl = `http://127.0.0.1${torrent['stream-port']}`
+				AppActions.stream(`http://127.0.0.1:${torrent['stream-port']}`)
+				_.defer(() => this.context.history.push({
+					pathname: '/player',
+					query: {
+						url: `http://127.0.0.1:${torrent['stream-port']}`
+					}
+				}))
 
-					AppActions.stream(streamUrl)
-					_.defer(() => this.context.history.replace('/player'))
-
-				})
 			})
 	};
 

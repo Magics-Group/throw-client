@@ -1,8 +1,4 @@
 import React from 'react'
-import {
-    RouteContext
-}
-from 'react-router'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
 export default class Framework extends React.Component {
