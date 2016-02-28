@@ -128,14 +128,20 @@ default class extends React.Component {
             })
     }
 
+    _handleScrobble(){
+        this.setState({scrobbling: false})
+        this.props.emitter.emit('scrobble', this.state.scrobbleTime)
+    }
+
+
     render() {
         const [CurrentTime, TotalTime, ScrobbleTime] = this._getHumanTime([this.state.time, this.state.totalTime, this.state.scrobbleTime])
 
         return (
-            <div className={'control-bar ' + (this.props.uiShown ? 'show' : null)} >
+            <div className={'control-bar ' + (this.props.uiShown ? 'show' : null)}>
                 <div 
                     onMouseDown={() => this.setState({scrobbling: true})} 
-                    onMouseUp={() => this.setState({scrobbling: false})} 
+                    onMouseUp={() => this._handleScrobble()}
                     onMouseMove={this._handleScrobblerHover.bind(this)}
                     className="scrobbler-padding" />
 

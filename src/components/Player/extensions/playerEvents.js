@@ -55,6 +55,8 @@ class PlayerEvents extends EventEmitter {
             this._wcjs.onMediaChanged = () => this.emit('changed')
         })
 
+        
+        this.on('scrobble', time => this._wcjs.time = time)
         this.on('togglePause', () => this._wcjs.togglePause())
         this.on('skipForward', () => this._wcjs.time += 30000)
         this.on('skipBackward', () => this._wcjs.time -= 30000)

@@ -12,8 +12,8 @@ app.on('ready', () => {
     const screenSize = require('screen').getPrimaryDisplay().workAreaSize;
 
     var mainWindow = new BrowserWindow({
-        width: 960,
-        height: screenSize.height * 0.7,
+        width: 575,
+        height: 350,
         'standard-window': true,
         'auto-hide-menu-bar': true,
         resizable: true,
