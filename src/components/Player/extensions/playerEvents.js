@@ -8,12 +8,25 @@ import {
 from 'events';
 import dns from 'dns'
 import os from 'os'
+import Promise from 'bluebird'
 import {
     remote
 }
 from 'electron'
 import reactQR from 'react-qr'
 import React from 'react'
+import socketIO from 'socket.io'
+import getPort from 'get-port'
+
+
+const getInternalIP = () => {
+    return new Promise((resolve, reject) => dns.lookup(os.hostname(), (err, add, fam) => {
+        if (err) return reject(err)
+        resolve(add)
+    }))
+}
+
+
 
 class PlayerEvents extends EventEmitter {
     constructor() {
@@ -28,6 +41,12 @@ class PlayerEvents extends EventEmitter {
             this._wcjs.onBuffering = throttle(buf => this.emit('buffering', buf), 500)
             this._wcjs.onLengthChanged = length => this.emit('length', length)
             this._wcjs.onSeekableChanged = Seekable => this.emit('seekable', Seekable)
+
+            this._wcjs.onFrameRendered = (width, height) => {
+                console.log(width, height)
+            }
+
+            
             this._wcjs.onPlaying = () => this.emit('playing', true)
             this._wcjs.onPaused = () => this.emit('playing', false)
             this._wcjs.onStopped = () => this.emit('playing', false)
@@ -35,7 +54,6 @@ class PlayerEvents extends EventEmitter {
             this._wcjs.onEncounteredError = err => this.emit('error', err)
             this._wcjs.onMediaChanged = () => this.emit('changed')
         })
-
 
         this.on('togglePause', () => this._wcjs.togglePause())
         this.on('skipForward', () => this._wcjs.time += 30000)
@@ -53,17 +71,29 @@ class PlayerEvents extends EventEmitter {
             this.emit('closed')
             remote.getCurrentWindow().setKiosk(false)
         });
+
+
+        Promise.all([getInternalIP(), getPort()])
+            .spread((ip, port) => {
+                this.ioServer = socketIO()
+                this.ioServer.on('connection', socket => {
+                    console.log(socket)
+
+
+                })
+                this.ioServer.listen(1337)
+                console.log(ip, this.ioServer)
+            });
+
     }
 
+
+
     QRcode() {
-        dns.lookup(os.hostname(), (err, add, fam) => {
-            console.log('addr: ' + add);
-        })
 
         return <reactQR text='1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v'/>
 
     }
-
 };
 
 

@@ -159,9 +159,13 @@ module.exports = {
 
         setupCanvas(canvas, vlc, options);
 
+        vlc.onFrameRendered = () => {}
+
         vlc.onFrameSetup =
             function(width, height, pixelFormat) {
                 frameSetup(canvas, width, height, pixelFormat);
+
+                vlc.onFrameRendered(width, height)
 
                 var draw = function() {
                     drawLoop = window.requestAnimationFrame(function() {
@@ -188,20 +192,20 @@ module.exports = {
                         }
                     }(width, height, pixelFormat), false);
 
-        };
+            };
 
         vlc.onFrameReady =
             function(videoFrame) {
                 (canvas.gl ? render : renderFallback)(canvas, videoFrame);
                 newFrame = true;
-        };
+            };
         vlc.onFrameCleanup =
             function() {
                 if (drawLoop) {
                     window.cancelAnimationFrame(drawLoop);
                     drawLoop = null;
                 }
-        };
+            };
         return vlc;
     },
 
@@ -247,20 +251,20 @@ module.exports = {
                         }
                     }(width, height, pixelFormat), false);
 
-        };
+            };
 
         vlc.onFrameReady =
             function(videoFrame) {
                 (canvas.gl ? render : renderFallback)(canvas, videoFrame);
                 newFrame = true;
-        };
+            };
         vlc.onFrameCleanup =
             function() {
                 if (drawLoop) {
                     window.cancelAnimationFrame(drawLoop);
                     drawLoop = null;
                 }
-        };
+            };
         return vlc;
 
 
