@@ -46,7 +46,7 @@ class Header extends React.Component {
                     >
                     {this.state.qrCode}
 
-                    <RaisedButton onClick={() => this.setState({pairingOpen: false})} style={{float: 'right', 'marginRight': '10px' }} label="Close" />  
+                    <RaisedButton onClick={() => this.setState({pairingOpen: false})} style={{float: 'right', 'marginRight': '10px', 'position': 'absolute', 'bottom': 0 }} label="Close" />  
                 </Dialog>
             </div>
         );
