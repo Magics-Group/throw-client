@@ -6,7 +6,7 @@
 
 ### Known Issues
 
- - QR Code Generator 
+ - QR Code Generator App pairing freezes app when running from compiled source, Run from repository for preview of this feature
 
 ### Screenshots
 
