@@ -159,7 +159,7 @@ default class extends React.Component {
                 <IconButton iconClassName="material-icons" onClick={() => this.props.emitter.emit('skipBackward')} className="prev-button">{'skip_previous'}</IconButton>
                 <IconButton iconClassName="material-icons" onClick={() => this.props.emitter.emit('skipForward')} className="next-button">{'skip_next'}</IconButton>
 
-                <IconButton onClick={this._handelMute.bind(this)} iconClassName="material-icons" iconStyle={{color: '#e7e7e7'}} className="volume-button">{this.state.muted ? 'volume_off' : this.state.volume <= 0 ? 'volume_mute' : this.state.volume <= 120 ? 'volume_down' : 'volume_up' }</IconButton>
+                <IconButton onClick={() => this.props.emitter.emit('toggleMute') && this.setState({muted: !this.state.muted})} iconClassName="material-icons" iconStyle={{color: '#e7e7e7'}} className="volume-button">{this.state.muted ? 'volume_off' : this.state.volume <= 0 ? 'volume_mute' : this.state.volume <= 120 ? 'volume_down' : 'volume_up' }</IconButton>
                 <Slider name="volume-slider" ref="volume-slider" defaultValue={this.state.volume} step={1} min={0} max={200} onChange={(e, volume) => this.props.emitter.emit('volumeChange', volume)} value={this.state.muted ? 0 : this.state.volume} />
                 <IconButton onClick={this._handleToggleFullscreen.bind(this)} iconClassName="material-icons" iconStyle={{color: '#e7e7e7', fontSize: '30px', top: '-5px', left: '-1px'}} className="fullscreen-toggle">{this.state.fullscreen ? 'fullscreen_exit' : 'fullscreen'}</IconButton>
             </div>

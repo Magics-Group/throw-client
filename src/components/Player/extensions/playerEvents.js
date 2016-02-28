@@ -26,7 +26,6 @@ const getInternalIP = () => {
     }))
 }
 
-
 export default class PlayerEvents extends EventEmitter {
     constructor() {
         super()
@@ -62,6 +61,7 @@ export default class PlayerEvents extends EventEmitter {
         this.on('skipBackward', () => this._wcjs.time -= 30000)
 
         this.on('play', url => this._wcjs.play(url));
+        this.on('toggleMute', () => this._wcjs.toggleMute())
         this.on('volumeChange', volume => {
             this._wcjs.volume = volume
             this.emit('volume', volume)
