@@ -18,6 +18,7 @@ class If extends React.Component {
 export default class Dashboard extends React.Component {
 
     state = {
+        urlAddOpen: false,
         torrentAddOpen: false,
         loadingModal: false
     };
@@ -31,6 +32,16 @@ export default class Dashboard extends React.Component {
         this.streamTorrent(torrent)
     }
 
+    streamURL = (url = this.refs['url-text'].getValue()) => {
+        if (!url || !url.length > 0) return
+
+
+        this.setState({
+            loadingModal: false,
+            torrentAddOpen: false
+        })
+        this.props.setUrl(url)
+    };
 
     streamTorrent = (torrent = false) => {
         if (!torrent) return console.error('No torrent defined something has gone horribly wrong!')
@@ -90,7 +101,7 @@ export default class Dashboard extends React.Component {
                                     Add Video
                                     </span>
                                 </RaisedButton>
-                                <RaisedButton style={{float: 'right', width: '130px', height: '108px'}} label="Use a URL">
+                                <RaisedButton style={{float: 'right', width: '130px', height: '108px'}} onClick={() => this.setState({urlAddOpen: true})} label="Use a URL">
                                     <img src="images/icons/link-icon.png" style={{marginTop: '17px'}}/>
                                     <br/>
                                     <span className="fl_sl lbl" style={{marginTop: '10px'}}>
@@ -107,7 +118,7 @@ export default class Dashboard extends React.Component {
         					>
                                 <If test={!this.state.loadingModal}>
                                     <div>
-        					        <TextField ref="torrent-text" style={{'marginBottom': '15px' }} fullWidth={true} onEnterKeyDown={() => this.addTorrent()} hintText="Magnet/Torrent URI or Video URL" />
+        					        <TextField ref="torrent-text" style={{'marginBottom': '15px' }} fullWidth={true} onEnterKeyDown={() => this.addTorrent()} hintText="Magnet/Torrent URI" />
                 				    <RaisedButton secondary={true} onClick={() => this.addTorrent()} style={{float: 'right', }} label="Stream" />
                                     <RaisedButton onClick={() => this.setState({torrentAddOpen: false})} style={{float: 'right', 'marginRight': '10px' }} label="Cancel" />
                                     </div>
@@ -115,8 +126,24 @@ export default class Dashboard extends React.Component {
                                 <If test={this.state.loadingModal}>
                                     <div className="loader"/>
                                 </If>
-
                 			</Dialog>
+
+
+
+                            <Dialog
+                                title='Stream URL'
+                                modal={true}
+                                open={this.state.urlAddOpen}
+                                onRequestClose={() => this.setState({StreamAddOpen: false})}
+                            >
+                              
+                                 
+                                    <TextField ref="url-text" style={{'marginBottom': '15px' }} fullWidth={true} onEnterKeyDown={() => this.streamURL()} hintText="Video URL" />
+                                    <RaisedButton secondary={true} onClick={() => this.streamURL()} style={{float: 'right', }} label="Stream" />
+                                    <RaisedButton onClick={() => this.setState({urlAddOpen: false})} style={{float: 'right', 'marginRight': '10px' }} label="Cancel" />
+                                  
+                                
+                            </Dialog>
                         </div>
                     </div>
                </center>

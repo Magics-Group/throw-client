@@ -14,13 +14,6 @@ class PlayerActions {
             'close'
         );
     }
-
-    open(opts) {
-        this.dispatch();
-        const [files, history] = opts;
-        this.actions.setFiles(files);
-        history.replace('player');
-    }
 }
 
 
