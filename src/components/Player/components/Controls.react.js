@@ -46,7 +46,6 @@ default class extends React.Component {
         this._cacheState = {};
     }, 1000);
 
-
     componentDidMount() {
         this.mounted = true
         this.props.emitter.on('playing', playing => this.setState({
@@ -84,6 +83,8 @@ default class extends React.Component {
 
             this._throttledStateUpdater()
         })
+
+        Mousetrap.bind('esc', () => {if(this.state.fullscreen)this._handleToggleFullscreen()}, 'keyup')
     }
     
     componentWillUnmount() {
@@ -135,12 +136,9 @@ default class extends React.Component {
         this.props.emitter.emit('scrobble', this.state.scrobbleTime)
     }
 
+
     render() {
         const [CurrentTime, TotalTime, ScrobbleTime] = this._getHumanTime([this.state.time, this.state.totalTime, this.state.scrobbleTime])
-
-        Mousetrap.bind('esc', function() {
-            remote.getCurrentWindow().setFullScreen(false)
-        }, 'keyup')
 
         return (
             <div className={'control-bar ' + (this.props.uiShown ? 'show' : null)}>
