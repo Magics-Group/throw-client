@@ -1,4 +1,6 @@
 ﻿import React from 'react'
+import mousetrap from 'mousetrap'
+
 import moment from 'moment'
 import _ from 'lodash'
 import {
@@ -83,7 +85,7 @@ default class extends React.Component {
             this._throttledStateUpdater()
         })
     }
-
+    
     componentWillUnmount() {
         this.mounted = false
     }
@@ -133,9 +135,12 @@ default class extends React.Component {
         this.props.emitter.emit('scrobble', this.state.scrobbleTime)
     }
 
-
     render() {
         const [CurrentTime, TotalTime, ScrobbleTime] = this._getHumanTime([this.state.time, this.state.totalTime, this.state.scrobbleTime])
+
+        Mousetrap.bind('esc', function() {
+            remote.getCurrentWindow().setFullScreen(false)
+        }, 'keyup')
 
         return (
             <div className={'control-bar ' + (this.props.uiShown ? 'show' : null)}>
