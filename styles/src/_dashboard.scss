@@ -42,10 +42,9 @@
 }
 
 .wrapper .settings {
-  width: 46px !important;
+  width: 46px;
   height: 46px;
-  top: -5px;
-  float: right;
+  position: absolute; top: 0; right: 0;
 }
 
 .wrapper .torrent-dash {

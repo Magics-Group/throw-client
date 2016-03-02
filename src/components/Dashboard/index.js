@@ -26,7 +26,8 @@ export default class Dashboard extends React.Component {
     state = {
         urlAddOpen: false,
         torrentAddOpen: false,
-        loadingModal: false
+        loadingModal: false,
+        vpnon: false
     };
 
     addTorrent() {
@@ -94,10 +95,25 @@ export default class Dashboard extends React.Component {
 
         return (
             <Dropzone onDrop={this.onDrop} multiple={false} disableClick={true} className="wrapper">
+
+            <If test={this.state.vpn}>
+                <IconButton iconClassName="material-icons" onClick={() => {
+                    this.setState({vpn: false})
+                    console.log("VPN turned off")
+                }
+                } className="settings">{'lock_outline'}</IconButton>
+            </If>
+            <If test={!this.state.vpn}>
+                <IconButton iconClassName="material-icons" onClick={() => {
+                    this.setState({vpn: true})
+                    console.log("VPN turned on")
+                }
+                } className="settings">{'lock_open'}</IconButton>
+            </If>
+
                <center>
                     <div ref="dropper">
                         <div>
-
   
                             <span className="fl_sl">Select an option from below</span>
                             <br/>
