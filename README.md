@@ -25,6 +25,7 @@ Pre-built binarys & setup files can be found in the [Releases Tab](https://githu
 
 - `npm install grunt-cli -g`
 - `npm install`
+-  `grunt deps`
 
 To run the app in development:
 
